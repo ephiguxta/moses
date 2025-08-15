@@ -97,8 +97,14 @@ void loop() {
 
     data.toCharArray(buffer, data_len);
 
+    // é preciso comparar o novo log com o antigo, se for
+    // diferente os dados são enviados via Bluetooth
     if (strncmp(buffer, old_buffer, data_len) != 0) {
-      Serial.println(buffer);
+      for(uint8_t i = 0; i < data_len; i++) {
+        bt_serial.write((char) buffer[i]);
+        delay(8);
+      }
+
       strncpy(old_buffer, buffer, data_len);
     }
   }
