@@ -93,15 +93,15 @@ void loop() {
     String data;
 
     serializeJson(can_json, data);
-    uint8_t data_len = data.length();
+    uint8_t data_len = data.length() + 1;
 
     data.toCharArray(buffer, data_len);
 
     // é preciso comparar o novo log com o antigo, se for
     // diferente os dados são enviados via Bluetooth
     if (strncmp(buffer, old_buffer, data_len) != 0) {
-      for(uint8_t i = 0; i < data_len; i++) {
-        bt_serial.write((char) buffer[i]);
+      for (uint8_t i = 0; i < data_len; i++) {
+        bt_serial.write((char)buffer[i]);
         delay(8);
       }
 
